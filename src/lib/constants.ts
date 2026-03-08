@@ -1,0 +1,31 @@
+export const COMPANY = {
+  name: "Gotham HVAC",
+  legalName: "Gotham HVAC LLC",
+  tagline: "Engineering-Led Heating & Cooling for NYC + Tri-State",
+  phone: "(917) 993-2591",
+  phoneTel: "tel:+19179932591",
+  phoneAlt: "(917) 993-2591",
+  email: "contact@gothamac.com",
+  address: {
+    street: "1489 Blondell Ave",
+    city: "Bronx",
+    state: "NY",
+    zip: "10461",
+    country: "US",
+    full: "1489 Blondell Ave, Bronx, NY 10461",
+  },
+  hours: "Monday–Friday, 8:00 AM – 5:00 PM",
+  url: "https://gothamac.com",
+  socials: {
+    instagram: "https://instagram.com/gotham_hvac",
+  },
+  serviceAreas: [
+    "Manhattan",
+    "Brooklyn",
+    "Queens",
+    "Bronx",
+    "Staten Island",
+    "Lower Westchester",
+    "Long Island",
+  ],
+} as const;
