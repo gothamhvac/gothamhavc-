@@ -2,9 +2,9 @@ export const COMPANY = {
   name: "Gotham HVAC",
   legalName: "Gotham HVAC LLC",
   tagline: "Engineering-Led Heating & Cooling for NYC + Tri-State",
-  phone: "(917) 993-2591",
-  phoneTel: "tel:+19179932591",
-  phoneAlt: "(917) 993-2591",
+  phone: "(718) 550-5504",
+  phoneTel: "tel:+17185505504",
+  phoneAlt: "(718) 550-5504",
   email: "contact@gothamac.com",
   address: {
     street: "1489 Blondell Ave",
