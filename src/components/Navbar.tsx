@@ -131,12 +131,24 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const [mobileMaintenanceOpen, setMobileMaintenanceOpen] = useState(false);
+  const [bannerVisible, setBannerVisible] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    if (localStorage.getItem("ga-banner-dismissed") !== "1") {
+      setBannerVisible(true);
+    }
+  }, []);
+
+  const dismissBanner = () => {
+    setBannerVisible(false);
+    localStorage.setItem("ga-banner-dismissed", "1");
+  };
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
@@ -146,12 +158,39 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled ? "nav-glass py-3" : "bg-transparent py-5"
-        }`}
+        className="fixed top-0 left-0 right-0 z-50"
         role="navigation"
         aria-label="Main navigation"
       >
+        {bannerVisible && (
+          <div className="bg-blue text-white">
+            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative flex items-center justify-center py-2">
+              <p className="text-[13px] font-medium text-center pr-7 sm:pr-0">
+                Looking for a window, through-the-wall, or portable AC?{" "}
+                <a
+                  href="https://gothamappliances.com"
+                  target="_blank"
+                  rel="noopener"
+                  className="font-semibold underline underline-offset-2 hover:text-white/80 transition-colors whitespace-nowrap"
+                >
+                  Shop Gotham Appliances &rarr;
+                </a>
+              </p>
+              <button
+                onClick={dismissBanner}
+                aria-label="Dismiss announcement"
+                className="absolute right-3 sm:right-4 p-1 text-white/70 hover:text-white transition-colors"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        )}
+        <div
+          className={`transition-all duration-500 ${
+            scrolled ? "nav-glass py-3" : "bg-transparent py-5"
+          }`}
+        >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             {/* Logo */}
@@ -347,6 +386,7 @@ export default function Navbar() {
               )}
             </button>
           </div>
+        </div>
         </div>
       </nav>
 
