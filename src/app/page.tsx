@@ -5,6 +5,7 @@ import Services from "@/components/Services";
 import HowItWorks from "@/components/HowItWorks";
 import WhyGotham from "@/components/WhyGotham";
 import Rebates from "@/components/Rebates";
+import SisterSite from "@/components/SisterSite";
 
 import FAQ from "@/components/FAQ";
 import Contact from "@/components/Contact";
@@ -22,7 +23,7 @@ export default function Home() {
         <HowItWorks />
         <WhyGotham />
         <Rebates />
-
+        <SisterSite />
         <FAQ />
         <Contact />
         <CTA />
