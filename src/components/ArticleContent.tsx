@@ -9,6 +9,7 @@ import {
   Clock,
   ChevronRight,
   Info,
+  MapPin,
 } from "lucide-react";
 import type { Article, ContentBlock } from "@/lib/articles";
 import { getRelatedArticles } from "@/lib/articles";
@@ -30,6 +31,15 @@ function slugify(text: string): string {
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/(^-|-$)/g, "");
+}
+
+/* Deterministic date-only formatting (en-US) to avoid hydration drift. */
+function formatDate(iso: string): string {
+  return new Date(`${iso}T00:00:00`).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 }
 
 export default function ArticleContent({ article }: ArticleContentProps) {
@@ -101,6 +111,25 @@ export default function ArticleContent({ article }: ArticleContentProps) {
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight max-w-3xl">
                 {article.title}
               </h1>
+
+              {/* Author byline + published/updated dates (E-E-A-T) */}
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-5 text-xs text-white/50">
+                <span className="font-semibold text-white/80">
+                  By {article.author ?? "Gotham HVAC"}
+                </span>
+                <span className="text-white/30">•</span>
+                <time dateTime={article.date}>
+                  Published {formatDate(article.date)}
+                </time>
+                {article.updated && article.updated !== article.date && (
+                  <>
+                    <span className="text-white/30">•</span>
+                    <time dateTime={article.updated}>
+                      Updated {formatDate(article.updated)}
+                    </time>
+                  </>
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -303,6 +332,25 @@ function Block({ block }: { block: ContentBlock }) {
           href={block.href}
           buttonText={block.buttonText}
         />
+      );
+
+    case "arealinks":
+      return (
+        <div className="my-8 p-6 rounded-xl bg-surface border border-border not-prose">
+          <p className="text-sm font-semibold text-dark mb-4">{block.text}</p>
+          <div className="flex flex-wrap gap-2.5">
+            {block.links.map((l, i) => (
+              <Link
+                key={i}
+                href={l.href}
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-white border border-border text-sm font-medium text-blue hover:border-blue/40 hover:bg-blue-subtle transition-colors"
+              >
+                <MapPin className="w-3.5 h-3.5" />
+                {l.label}
+              </Link>
+            ))}
+          </div>
+        </div>
       );
 
     default:

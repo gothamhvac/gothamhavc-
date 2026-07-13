@@ -11,6 +11,14 @@ export interface ServiceArea {
   commonChallenges: { title: string; description: string }[];
   popularServices: { label: string; href: string }[];
   neighborhoods: string[];
+  /* Area-specific FAQ — drives the visible FAQ section and FAQPage JSON-LD.
+     Tailor questions to the local building stock so pages don't read as
+     templated duplicates of one another. */
+  faqs?: { question: string; answer: string }[];
+  /* Contextual links from this area page to relevant Learn articles. */
+  guides?: { label: string; href: string }[];
+  /* ISO date the page content was last meaningfully updated (sitemap lastmod). */
+  updated?: string;
 }
 
 export const serviceAreas: ServiceArea[] = [
@@ -144,6 +152,38 @@ export const serviceAreas: ServiceArea[] = [
       "Flatbush", "Prospect Heights", "Cobble Hill", "Carroll Gardens",
       "Greenpoint", "Sunset Park", "Downtown Brooklyn", "Bensonhurst",
     ],
+    updated: "2026-07-11",
+    guides: [
+      { label: "Mini-Split vs. Central Air: Which Is Right for Your NYC Home?", href: "/learn/mini-split-vs-central-air" },
+      { label: "6 Signs Your Boiler Needs Repair Before It Fails", href: "/learn/signs-boiler-needs-repair" },
+    ],
+    faqs: [
+      {
+        question: "Can I add central air to my Brooklyn brownstone if it has no ductwork?",
+        answer:
+          "Most brownstones and prewar Brooklyn apartments were never built with ductwork, so full central air usually isn't practical without major construction. Ductless mini-splits are the standard solution — wall-mounted heads in each room connected to one outdoor condenser, with no need to open up walls and ceilings for duct runs.",
+      },
+      {
+        question: "Some radiators in my prewar Brooklyn apartment are scorching while others stay cold — can you fix that?",
+        answer:
+          "Yes. Uneven heat is the number-one complaint in older Brooklyn buildings. In steam systems it's usually failed steam traps or clogged air vents; in hot-water systems it's often air locks or a stuck zone valve. Balancing the system — rather than cranking the boiler — is what actually evens out the temperature room to room.",
+      },
+      {
+        question: "Can I install a mini-split on a landmarked or historic-district Brooklyn building?",
+        answer:
+          "Usually, but placement matters. In landmarked districts and many co-ops, the outdoor condenser typically needs to sit where it isn't visible from the street, and some buildings require board or LPC-aware approval. We plan the line routing and condenser location to respect those constraints while keeping the system serviceable.",
+      },
+      {
+        question: "My Brooklyn brownstone still has the original cast-iron boiler — should I repair or replace it?",
+        answer:
+          "Cast-iron boilers can run 30–50 years, so age alone isn't a reason to replace. If it's a single failed component, repair usually makes sense. If it's over 20 years old, needs repeated repairs, or has a cracked section, a high-efficiency condensing boiler can cut fuel bills significantly. We give an honest repair-vs-replace assessment rather than defaulting to replacement.",
+      },
+      {
+        question: "Do you handle HVAC for new-construction condos and gut renovations in Brooklyn?",
+        answer:
+          "Yes. For new construction and full gut jobs we design the mechanical system from scratch — load calculations, equipment selection, ductwork or mini-split layout, and code-compliant installation — rather than trying to force an off-the-shelf system into the space.",
+      },
+    ],
   },
 
   {
@@ -273,6 +313,38 @@ export const serviceAreas: ServiceArea[] = [
       "Tremont", "University Heights", "Kingsbridge", "Riverdale",
       "Pelham Bay", "Throgs Neck", "Country Club", "Parkchester",
       "Morris Park", "Norwood", "Concourse", "Soundview",
+    ],
+    updated: "2026-07-11",
+    guides: [
+      { label: "6 Signs Your Boiler Needs Repair Before It Fails", href: "/learn/signs-boiler-needs-repair" },
+      { label: "AC Not Cooling or Heater Not Heating? What to Check", href: "/learn/ac-not-cooling-heater-not-heating" },
+    ],
+    faqs: [
+      {
+        question: "My prewar Bronx apartment building has a steam boiler that bangs and knocks — what causes that?",
+        answer:
+          "That knocking is water hammer, and it's extremely common in the 1920s–60s multifamily buildings that make up much of the Bronx's housing stock. It's usually caused by trapped condensate meeting incoming steam, failed steam traps, or pitched-wrong return lines. It's almost always repairable without replacing the boiler — we diagnose the specific cause on site rather than guessing.",
+      },
+      {
+        question: "Do you help Bronx residents apply for HEAP Cooling Assistance?",
+        answer:
+          "Yes. We're an approved vendor for HEAP Cooling Assistance and the Essential Plan Cooling Program (EPCP), both of which can provide a free air conditioner and installation for income-eligible Bronx households. We can walk you through eligibility and handle the installation once you're approved.",
+      },
+      {
+        question: "Can you service a central boiler that heats an entire Bronx apartment building?",
+        answer:
+          "Yes — large-building boiler service is one of our core competencies in the Bronx. We handle combustion analysis, burner tuning, low-water cutoff testing, and preventive maintenance on the commercial boilers that heat dozens or hundreds of units, which keeps fuel costs down and heat reliable through winter.",
+      },
+      {
+        question: "My Bronx apartment only has window units — can I get something more permanent?",
+        answer:
+          "A ductless mini-split is the usual upgrade. It mounts on the wall, runs quieter than a window unit, and provides both heating and cooling year-round through a small line to an outdoor condenser. For many Bronx buildings it's the most practical way to add real climate control without ductwork.",
+      },
+      {
+        question: "Do you work on older heating infrastructure without replacing the whole system?",
+        answer:
+          "Often, yes. Many older Bronx buildings have original piping and controls that are simply inefficient rather than failed. Upgrading controls, replacing stuck zone valves, insulating pipes, and re-balancing the distribution can meaningfully improve performance without the cost of a full system replacement.",
+      },
     ],
   },
 
@@ -577,6 +649,38 @@ export const serviceAreas: ServiceArea[] = [
       "North Side", "Hartley Park", "Oakwood Heights",
       "Pelham Gardens border", "Eastchester border", "Bronxville border",
     ],
+    updated: "2026-07-11",
+    guides: [
+      { label: "6 Signs Your Boiler Needs Repair Before It Fails", href: "/learn/signs-boiler-needs-repair" },
+      { label: "7 HVAC Maintenance Tips That Prevent Costly Repairs", href: "/learn/hvac-maintenance-tips" },
+    ],
+    faqs: [
+      {
+        question: "My Mount Vernon multi-family building has an aging boiler — how do I know if it needs replacing?",
+        answer:
+          "Warning signs include rising fuel bills without a usage change, uneven heat between units, water pooling at the base, kettling or banging noises, and repeated repairs. We run a combustion analysis to measure how efficiently it's actually burning, then give you a straight repair-or-replace recommendation based on the numbers and the boiler's age.",
+      },
+      {
+        question: "My Mount Vernon home still runs on oil heat — is converting worth it?",
+        answer:
+          "For many Mount Vernon homeowners, yes. Converting from oil to natural gas or an electric heat pump eliminates oil deliveries and tank maintenance and typically lowers monthly heating costs. Heat pump conversions can also qualify for NYSERDA incentives. We'll lay out the options and realistic payback for your specific house.",
+      },
+      {
+        question: "Do Mount Vernon residents qualify for cooling-assistance programs?",
+        answer:
+          "Many do. Mount Vernon residents may be eligible for HEAP Cooling Assistance and related energy programs that cover an air conditioner and installation for income-qualified households. We're an approved vendor and can help you check eligibility before you apply.",
+      },
+      {
+        question: "Do you do permit work for boiler and heating replacements in Mount Vernon?",
+        answer:
+          "Yes. Boiler and heating-system replacements in Mount Vernon generally require permits and inspection. We handle the permit paperwork and coordinate inspections as part of the job so the installation is done to code and properly signed off.",
+      },
+      {
+        question: "You're right next to the Bronx — do you actually service Mount Vernon regularly?",
+        answer:
+          "Yes. Mount Vernon borders the Bronx where we're based, so it's one of our most-served Westchester areas. The shared building stock — multi-family walk-ups, two- and three-family homes, and older single-family houses — is exactly the kind of work we do every week.",
+      },
+    ],
   },
 
   {
@@ -648,6 +752,38 @@ export const serviceAreas: ServiceArea[] = [
       "Ardsley", "Dobbs Ferry", "Hastings-on-Hudson", "Irvington",
       "Tarrytown", "Sleepy Hollow", "Elmsford", "Valhalla",
       "Greenburgh", "Hartsdale", "Edgemont", "Pleasantville",
+    ],
+    updated: "2026-07-11",
+    guides: [
+      { label: "Mini-Split vs. Central Air: Which Is Right for Your Home?", href: "/learn/mini-split-vs-central-air" },
+      { label: "7 HVAC Maintenance Tips That Prevent Costly Repairs", href: "/learn/hvac-maintenance-tips" },
+    ],
+    faqs: [
+      {
+        question: "My Westchester colonial still burns heating oil — should I convert to gas or a heat pump?",
+        answer:
+          "A significant number of older Westchester homes still burn oil. Converting to natural gas or a cold-climate heat pump ends oil deliveries and tank upkeep and usually lowers monthly costs. Heat-pump conversions from fossil fuel also qualify for the highest NYSERDA incentives. The right choice depends on your gas availability, ductwork, and how long you plan to stay — we'll model both.",
+      },
+      {
+        question: "My older Westchester colonial never had central AC — can it be added?",
+        answer:
+          "Yes, in most cases. If the home has usable ductwork, central air is straightforward. If it doesn't — common in prewar colonials — ductless mini-splits add cooling without tearing open walls. Either way we start with a load calculation so the system is sized correctly rather than oversized, which is the most common mistake in retrofits.",
+      },
+      {
+        question: "The second floor of my Westchester home is always hotter than the first — what fixes that?",
+        answer:
+          "Uneven temperatures in larger Westchester homes are usually a zoning and airflow problem, not a bad thermostat. A multi-zone system with independent thermostats — or a properly balanced duct system with the right returns — conditions the upstairs and downstairs separately so both stay comfortable.",
+      },
+      {
+        question: "How old is too old for a Westchester furnace or boiler?",
+        answer:
+          "Furnaces over 20 years and boilers over 25 lose efficiency and reliability. If yours is in that range and needs a significant repair, upgrading to high-efficiency equipment can cut fuel costs 20–30% and often qualifies for NYSERDA rebates. Under 15 years with a single failed part, repair is usually the better value. We give an honest assessment either way.",
+      },
+      {
+        question: "Which Westchester towns do you cover?",
+        answer:
+          "We serve lower and central Westchester — including Bronxville, Tuckahoe, Eastchester, Scarsdale, Pelham, Larchmont, Mamaroneck, Rye, Harrison, and the river towns from Hastings up to Tarrytown and Valhalla — in addition to our dedicated pages for Yonkers, New Rochelle, White Plains, and Mount Vernon.",
+      },
     ],
   },
 

@@ -26,6 +26,22 @@ const companyLinks = [
   { label: "Request Service", href: "/#contact" },
 ];
 
+/* Sitewide internal links to the top local service-area pages.
+   `title` gives descriptive anchor context for crawlers. */
+const areaLinks = [
+  { label: "The Bronx", href: "/service-areas/bronx", title: "HVAC services in the Bronx" },
+  { label: "Manhattan", href: "/service-areas/manhattan", title: "HVAC services in Manhattan" },
+  { label: "Brooklyn", href: "/service-areas/brooklyn", title: "HVAC services in Brooklyn" },
+  { label: "Queens", href: "/service-areas/queens", title: "HVAC services in Queens" },
+  { label: "Staten Island", href: "/service-areas/staten-island", title: "HVAC services in Staten Island" },
+  { label: "Yonkers", href: "/service-areas/yonkers", title: "HVAC services in Yonkers" },
+  { label: "Mount Vernon", href: "/service-areas/mount-vernon", title: "HVAC services in Mount Vernon" },
+  { label: "White Plains", href: "/service-areas/white-plains", title: "HVAC services in White Plains" },
+  { label: "Westchester County", href: "/service-areas/westchester", title: "HVAC services in Westchester County" },
+  { label: "Hempstead", href: "/service-areas/hempstead", title: "HVAC services in Hempstead, Long Island" },
+  { label: "Garden City", href: "/service-areas/garden-city", title: "HVAC services in Garden City, Long Island" },
+];
+
 const socials = [
   { icon: Instagram, href: COMPANY.socials.instagram, label: "Instagram" },
 ];
@@ -148,6 +164,31 @@ export default function Footer() {
                 className="grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
               />
             </div>
+          </div>
+        </div>
+
+        {/* Areas We Serve */}
+        <div className="border-t border-white/5 py-8">
+          <h3 className="text-xs font-semibold uppercase tracking-[0.15em] text-white/20 mb-4">
+            Areas We Serve
+          </h3>
+          <div className="flex flex-wrap gap-x-5 gap-y-2">
+            {areaLinks.map((area) => (
+              <Link
+                key={area.href}
+                href={area.href}
+                title={area.title}
+                className="text-sm text-white/40 hover:text-white transition-colors duration-200"
+              >
+                {area.label}
+              </Link>
+            ))}
+            <Link
+              href="/service-areas"
+              className="text-sm font-medium text-blue hover:text-blue-light transition-colors duration-200"
+            >
+              View all areas →
+            </Link>
           </div>
         </div>
 

@@ -102,7 +102,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     ...articles.map((a) => ({
       url: `${COMPANY.url}/learn/${a.slug}`,
-      lastModified: a.date,
+      lastModified: a.updated ?? a.date,
       changeFrequency: "monthly" as const,
       priority: 0.6,
     })),
@@ -114,7 +114,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     ...serviceAreas.map((a) => ({
       url: `${COMPANY.url}/service-areas/${a.slug}`,
-      lastModified: SITE_UPDATED,
+      lastModified: a.updated ?? SITE_UPDATED,
       changeFrequency: "monthly" as const,
       priority: 0.6,
     })),

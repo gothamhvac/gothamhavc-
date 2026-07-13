@@ -58,18 +58,26 @@ export default async function ArticlePage({
     "@type": "Article",
     headline: article.title,
     description: article.description,
-    image: article.heroImage,
+    image: `${COMPANY.url}${article.heroImage}`,
     datePublished: article.date,
-    dateModified: article.date,
+    dateModified: article.updated ?? article.date,
     author: {
       "@type": "Organization",
-      name: COMPANY.name,
+      name: article.author ?? COMPANY.name,
       url: COMPANY.url,
     },
     publisher: {
       "@type": "Organization",
       name: COMPANY.name,
       url: COMPANY.url,
+      logo: {
+        "@type": "ImageObject",
+        url: `${COMPANY.url}/gotham-logo.png`,
+      },
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `${COMPANY.url}/learn/${slug}`,
     },
   };
 

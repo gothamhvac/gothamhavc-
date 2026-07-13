@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 import ServiceAreaContent from "@/components/ServiceAreaContent";
 import { serviceAreas, getServiceAreaBySlug } from "@/lib/service-areas";
 import { COMPANY } from "@/lib/constants";
-import { getBreadcrumbSchema } from "@/lib/structured-data";
+import { getBreadcrumbSchema, getServiceFAQSchema } from "@/lib/structured-data";
 
 export function generateStaticParams() {
   return serviceAreas.map((a) => ({ slug: a.slug }));
@@ -91,6 +91,15 @@ export default async function ServiceAreaPage({
     { name: area.name, href: `/service-areas/${slug}` },
   ]);
 
+  /* FAQPage schema — only when the page actually displays these questions,
+     so the structured data matches visible content (Google requirement). */
+  const faqSchema =
+    area.faqs && area.faqs.length > 0
+      ? getServiceFAQSchema(
+          area.faqs.map((f) => ({ question: f.question, answer: f.answer }))
+        )
+      : null;
+
   return (
     <>
       <script
@@ -101,6 +110,12 @@ export default async function ServiceAreaPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }}
       />
+      {faqSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+      )}
       <Navbar />
       <main id="main-content">
         <ServiceAreaContent area={area} />

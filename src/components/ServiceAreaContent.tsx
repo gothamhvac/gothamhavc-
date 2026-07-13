@@ -8,6 +8,8 @@ import {
   Wrench,
   Phone,
   ChevronRight,
+  HelpCircle,
+  BookOpen,
 } from "lucide-react";
 import type { ServiceArea } from "@/lib/service-areas";
 import { COMPANY } from "@/lib/constants";
@@ -220,6 +222,83 @@ export default function ServiceAreaContent({ area }: ServiceAreaContentProps) {
           </div>
         </div>
       </section>
+
+      {/* ── Area-specific FAQ ── */}
+      {area.faqs && area.faqs.length > 0 && (
+        <section className="section-cool py-14 sm:py-20" aria-label={`Frequently asked questions about HVAC in ${area.name}`}>
+          <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="w-10 h-10 rounded-xl bg-blue/10 flex items-center justify-center">
+                <HelpCircle className="w-5 h-5 text-blue" />
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-bold text-dark">
+                {area.name} HVAC — Frequently Asked Questions
+              </h2>
+            </div>
+            <div className="section-line mt-4 mb-8" />
+
+            <div className="space-y-4">
+              {area.faqs.map((faq, i) => (
+                <details
+                  key={i}
+                  className="group card-gradient-border p-6 [&_summary::-webkit-details-marker]:hidden"
+                >
+                  <summary className="flex items-start justify-between gap-4 cursor-pointer list-none">
+                    <h3 className="text-base font-bold text-dark leading-snug">
+                      {faq.question}
+                    </h3>
+                    <ChevronRight className="w-5 h-5 text-blue flex-shrink-0 mt-0.5 transition-transform duration-200 group-open:rotate-90" />
+                  </summary>
+                  <p className="text-sm text-text-secondary leading-relaxed mt-4">
+                    {faq.answer}
+                  </p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ── Helpful Guides (area → Learn cross-links) ── */}
+      {area.guides && area.guides.length > 0 && (
+        <section className="bg-white py-14 sm:py-20" aria-label={`HVAC guides relevant to ${area.name}`}>
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="w-10 h-10 rounded-xl bg-blue/10 flex items-center justify-center">
+                <BookOpen className="w-5 h-5 text-blue" />
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-bold text-dark">
+                Helpful Guides for {area.name} Homeowners
+              </h2>
+            </div>
+            <div className="section-line mt-4 mb-10" />
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {area.guides.map((g, i) => (
+                <Link
+                  key={i}
+                  href={g.href}
+                  className="group card-gradient-border p-5 flex items-center justify-between gap-4"
+                >
+                  <span className="text-sm font-semibold text-dark group-hover:text-blue transition-colors">
+                    {g.label}
+                  </span>
+                  <ArrowRight className="w-4 h-4 text-text-tertiary group-hover:text-blue transition-colors flex-shrink-0" />
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/*
+        ── Recent Work in {area.name} ──
+        TODO: owner to supply real testimonials/photos for this area.
+        Intentionally NOT rendered until real, area-specific content exists —
+        do not ship placeholder or fabricated reviews (violates Google guidelines
+        and the no-fake-content rule). When photos/quotes are ready, add a
+        `recentWork` field to the ServiceArea and render it here.
+      */}
 
       {/* ── CTA ── */}
       <section className="section-cool py-16 sm:py-20">

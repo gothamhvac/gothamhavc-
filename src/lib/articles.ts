@@ -15,7 +15,8 @@ export type ContentBlock =
   | { type: "list"; items: string[] }
   | { type: "callout"; text: string }
   | { type: "image"; src: string; alt: string; caption?: string }
-  | { type: "cta"; variant: "subtle" | "card"; text: string; href: string; buttonText?: string };
+  | { type: "cta"; variant: "subtle" | "card"; text: string; href: string; buttonText?: string }
+  | { type: "arealinks"; text: string; links: { label: string; href: string }[] };
 
 export interface Article {
   slug: string;
@@ -24,6 +25,12 @@ export interface Article {
   category: "Maintenance" | "Troubleshooting" | "Systems";
   readTime: string;
   date: string;
+  /* ISO date of the last meaningful content update. Drives the visible
+     "Updated" byline, Article dateModified schema, and sitemap lastmod.
+     Falls back to `date` when absent. */
+  updated?: string;
+  /* Visible author byline + schema author. Defaults to the company. */
+  author?: string;
   heroImage: string;
   icon: LucideIcon;
   content: ContentBlock[];
@@ -329,6 +336,7 @@ export const articles: Article[] = [
     category: "Maintenance",
     readTime: "5 min read",
     date: "2026-03-01",
+    updated: "2026-07-11",
     heroImage: "/changing-air-filter.webp",
     icon: Wind,
     content: [
@@ -388,6 +396,15 @@ export const articles: Article[] = [
         text: "For NYC apartments and older buildings where space is tight, a well-fitted MERV-8 pleated filter changed regularly will outperform a high-MERV filter that's choking the system. Filtration is a system design decision, not just a trip to the hardware store.",
       },
       {
+        type: "arealinks",
+        text: "We service filters, coils, and full systems across NYC and the surrounding area:",
+        links: [
+          { label: "The Bronx", href: "/service-areas/bronx" },
+          { label: "Queens", href: "/service-areas/queens" },
+          { label: "Brooklyn", href: "/service-areas/brooklyn" },
+        ],
+      },
+      {
         type: "cta",
         variant: "card",
         text: "Not sure which filter your system needs? We can evaluate your setup and recommend the right filter type and MERV rating for your equipment and ductwork.",
@@ -406,6 +423,7 @@ export const articles: Article[] = [
     category: "Systems",
     readTime: "8 min read",
     date: "2026-03-04",
+    updated: "2026-07-11",
     heroImage: "/commercial-ac-units.webp",
     icon: Snowflake,
     content: [
@@ -495,6 +513,15 @@ export const articles: Article[] = [
         text: "NYSERDA rebates currently apply to both heat pump mini-splits and central heat pump systems, which can offset a significant portion of the installation cost. The rebate amounts depend on system efficiency and whether you're replacing fossil fuel equipment.",
       },
       {
+        type: "arealinks",
+        text: "See how we approach cooling in the neighborhoods where these systems are most common:",
+        links: [
+          { label: "Brooklyn", href: "/service-areas/brooklyn" },
+          { label: "Manhattan", href: "/service-areas/manhattan" },
+          { label: "Westchester County", href: "/service-areas/westchester" },
+        ],
+      },
+      {
         type: "cta",
         variant: "card",
         text: "Whether it's a mini-split for your brownstone or a central system for your whole home, we'll help you choose the right setup — and handle the permits, installation, and rebate paperwork.",
@@ -513,6 +540,7 @@ export const articles: Article[] = [
     category: "Troubleshooting",
     readTime: "6 min read",
     date: "2026-03-02",
+    updated: "2026-07-11",
     heroImage: "/basement-boiler-room.webp",
     icon: Flame,
     content: [
@@ -591,6 +619,15 @@ export const articles: Article[] = [
       {
         type: "paragraph",
         text: "Cast iron boilers can last 30–50 years with proper maintenance. Steel boilers typically last 15–25 years. If your boiler is under 15 years old and the issue is a single component (circulator, control, valve), repair almost always makes sense. If it's over 20 years old, has a cracked heat exchanger, or needs multiple expensive repairs in a short period, replacement with a high-efficiency condensing boiler can cut fuel costs by 15–30% and pay for itself in 5–8 years.",
+      },
+      {
+        type: "arealinks",
+        text: "We service boilers throughout the areas where they're most common:",
+        links: [
+          { label: "The Bronx", href: "/service-areas/bronx" },
+          { label: "Brooklyn", href: "/service-areas/brooklyn" },
+          { label: "Mount Vernon", href: "/service-areas/mount-vernon" },
+        ],
       },
       {
         type: "cta",
