@@ -4,6 +4,7 @@ import { useState, useRef, useCallback } from "react";
 import Link from "next/link";
 import { Clock, MapPin, Phone, Mail, ArrowRight, Paperclip, X, Upload, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
 import { COMPANY } from "@/lib/constants";
+import { trackFormSubmit } from "@/lib/gtag";
 import { FadeIn } from "@/components/motion/FadeIn";
 
 const ACCEPTED_TYPES = [
@@ -129,6 +130,8 @@ export default function Contact() {
         setServerError(data.error ?? "Something went wrong. Please try again.");
         return;
       }
+
+      trackFormSubmit();
 
       setStatus("success");
       setName("");
