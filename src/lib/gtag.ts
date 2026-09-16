@@ -7,24 +7,26 @@
  * loader, two destinations; a second gtag/js script is not needed.
  *
  * Env overrides (optional):
- *   NEXT_PUBLIC_GADS_ID="AW-17972837903"
- *   NEXT_PUBLIC_GADS_PHONE_CONV="AW-17972837903/AbC-D_efG123"
- *   NEXT_PUBLIC_GADS_FORM_CONV="AW-17972837903/XyZ-1_234abc"
+ *   NEXT_PUBLIC_GADS_TAG_ID="AW-17972837903"
+ *   NEXT_PUBLIC_GADS_PHONE_CONV="AW-17972837903/<phone label>"
+ *   NEXT_PUBLIC_GADS_FORM_CONV="AW-17972837903/<form label>"
  *
  * NEXT_PUBLIC_* values are inlined at build time, so changing them requires a
  * rebuild/redeploy.
  */
 
 /** Google Ads account id. Configured on every page so the base tag is present. */
-export const GADS_ID = process.env.NEXT_PUBLIC_GADS_ID || "AW-17972837903";
+export const GADS_ID = process.env.NEXT_PUBLIC_GADS_TAG_ID || "AW-17972837903";
 
 /** send_to value for a phone-call (tel: click) conversion. */
 export const GADS_PHONE_CONVERSION =
-  process.env.NEXT_PUBLIC_GADS_PHONE_CONV || `${GADS_ID}/PHONE_LABEL`;
+  process.env.NEXT_PUBLIC_GADS_PHONE_CONV ||
+  `${GADS_ID}/sIOFCND_tPkcEI_8jvpC`;
 
 /** send_to value for a contact-form submission conversion. */
 export const GADS_FORM_CONVERSION =
-  process.env.NEXT_PUBLIC_GADS_FORM_CONV || `${GADS_ID}/FORM_LABEL`;
+  process.env.NEXT_PUBLIC_GADS_FORM_CONV ||
+  `${GADS_ID}/fEylCM3_tPkcEI_8jvpC`;
 
 /** True once the AW- account id is real (it is, unless overridden to junk). */
 export const hasGoogleAdsId = /^AW-\d{6,}$/.test(GADS_ID);
