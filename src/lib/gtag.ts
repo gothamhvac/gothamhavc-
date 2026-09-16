@@ -1,38 +1,43 @@
 /**
  * Google Ads conversion helpers.
  *
- * These ride on the Google tag (gtag.js) that is already loaded in the root
- * layout for GA4 — no second tag is injected. The Google Ads account is added
- * as an extra destination on that same tag via `gtag('config', AW-...)`.
+ * These ride on the Google tag (gtag.js) already loaded in the root layout for
+ * GA4. The Ads account is added as a second destination on that same tag with
+ * `gtag('config', GADS_ID)` — Google's documented multi-destination setup. One
+ * loader, two destinations; a second gtag/js script is not needed.
  *
- * Env overrides (optional — placeholders are used when unset):
- *   NEXT_PUBLIC_GADS_PHONE_CONV="AW-1234567890/AbC-D_efG123"
- *   NEXT_PUBLIC_GADS_FORM_CONV="AW-1234567890/XyZ-1_234abc"
+ * Env overrides (optional):
+ *   NEXT_PUBLIC_GADS_ID="AW-17972837903"
+ *   NEXT_PUBLIC_GADS_PHONE_CONV="AW-17972837903/AbC-D_efG123"
+ *   NEXT_PUBLIC_GADS_FORM_CONV="AW-17972837903/XyZ-1_234abc"
  *
  * NEXT_PUBLIC_* values are inlined at build time, so changing them requires a
  * rebuild/redeploy.
  */
 
-const PHONE_CONVERSION_FALLBACK = "AW-XXXXXXXXX/PHONE_LABEL";
-const FORM_CONVERSION_FALLBACK = "AW-XXXXXXXXX/FORM_LABEL";
+/** Google Ads account id. Configured on every page so the base tag is present. */
+export const GADS_ID = process.env.NEXT_PUBLIC_GADS_ID || "AW-17972837903";
 
 /** send_to value for a phone-call (tel: click) conversion. */
 export const GADS_PHONE_CONVERSION =
-  process.env.NEXT_PUBLIC_GADS_PHONE_CONV || PHONE_CONVERSION_FALLBACK;
+  process.env.NEXT_PUBLIC_GADS_PHONE_CONV || `${GADS_ID}/PHONE_LABEL`;
 
 /** send_to value for a contact-form submission conversion. */
 export const GADS_FORM_CONVERSION =
-  process.env.NEXT_PUBLIC_GADS_FORM_CONV || FORM_CONVERSION_FALLBACK;
+  process.env.NEXT_PUBLIC_GADS_FORM_CONV || `${GADS_ID}/FORM_LABEL`;
+
+/** True once the AW- account id is real (it is, unless overridden to junk). */
+export const hasGoogleAdsId = /^AW-\d{6,}$/.test(GADS_ID);
 
 /**
- * The Google Ads account id ("AW-XXXXXXXXX") derived from the conversion
- * labels above, so there is a single place to swap real values in.
+ * A send_to is only usable once its conversion label is filled in. Until then
+ * the base tag still loads (so Ads can verify the site), but no conversion
+ * events fire against a non-existent label.
  */
-export const GADS_CONVERSION_ID = GADS_PHONE_CONVERSION.split("/")[0];
-
-/** True once a real AW- id is configured (not the placeholder). */
-export const hasGoogleAdsId =
-  GADS_CONVERSION_ID.startsWith("AW-") && !GADS_CONVERSION_ID.includes("XXXXXXXXX");
+function hasRealLabel(sendTo: string): boolean {
+  const label = sendTo.split("/")[1];
+  return Boolean(label) && label !== "PHONE_LABEL" && label !== "FORM_LABEL";
+}
 
 type GtagFn = (
   command: "config" | "event" | "js" | "set",
@@ -48,15 +53,21 @@ declare global {
 }
 
 /**
- * Fire a Google Ads conversion. No-ops during SSR and when the Google tag has
- * not loaded (ad blocker, consent tooling, tag still fetching), so it is always
- * safe to call from an event handler.
+ * Fire a Google Ads conversion. No-ops during SSR, when the Google tag has not
+ * loaded (ad blocker, consent tooling, tag still fetching), and when the
+ * conversion label is still a placeholder — so it is always safe to call.
  */
 export function reportConversion(
   sendTo: string,
   extra?: Record<string, unknown>,
 ): void {
   if (typeof window === "undefined") return;
+  if (!hasRealLabel(sendTo)) {
+    if (process.env.NODE_ENV !== "production") {
+      console.warn(`[gtag] conversion label not configured yet: ${sendTo}`);
+    }
+    return;
+  }
 
   const gtag = window.gtag;
   if (typeof gtag !== "function") return;

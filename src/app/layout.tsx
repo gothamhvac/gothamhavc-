@@ -6,7 +6,7 @@ import { getLocalBusinessSchema, getServiceSchema, getWebSiteSchema } from "@/li
 import { COMPANY } from "@/lib/constants";
 import PromoPopup from "@/components/PromoPopup";
 import PhoneClickTracker from "@/components/analytics/PhoneClickTracker";
-import { GADS_CONVERSION_ID, hasGoogleAdsId } from "@/lib/gtag";
+import { GADS_ID, hasGoogleAdsId } from "@/lib/gtag";
 
 const GA_ID = "G-0PCJGXY3J9";
 
@@ -112,7 +112,7 @@ export default function RootLayout({
             window.gtag = window.gtag || gtag;
             gtag('js', new Date());
             gtag('config', '${GA_ID}');
-            ${hasGoogleAdsId ? `gtag('config', '${GADS_CONVERSION_ID}');` : ""}
+            ${hasGoogleAdsId ? `gtag('config', '${GADS_ID}');` : ""}
           `}
         </Script>
       </head>
