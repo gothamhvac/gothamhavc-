@@ -126,7 +126,14 @@ const navLinks = [
   { label: "Contact", href: "/#contact" },
 ];
 
-export default function Navbar() {
+interface NavbarProps {
+  /** Show the Gotham Appliances banner (off on Google Ads landing pages). */
+  showBanner?: boolean;
+  /** Where "Get a Quote" goes (landing pages point at their own form). */
+  quoteHref?: string;
+}
+
+export default function Navbar({ showBanner = true, quoteHref = "/#contact" }: NavbarProps = {}) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
@@ -140,10 +147,10 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
-    if (localStorage.getItem("ga-banner-dismissed") !== "1") {
+    if (showBanner && localStorage.getItem("ga-banner-dismissed") !== "1") {
       setBannerVisible(true);
     }
-  }, []);
+  }, [showBanner]);
 
   const dismissBanner = () => {
     setBannerVisible(false);
@@ -293,7 +300,7 @@ export default function Navbar() {
                               </div>
                             </div>
                             <Link
-                              href="/#contact"
+                              href={quoteHref}
                               className="px-4 py-2 rounded-lg bg-blue text-white text-xs font-semibold hover:bg-blue/90 transition-colors duration-200"
                             >
                               Get a Quote
@@ -362,7 +369,7 @@ export default function Navbar() {
                 {COMPANY.phone}
               </a>
               <Link
-                href="/#contact"
+                href={quoteHref}
                 className={`px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 ${
                   scrolled
                     ? "bg-dark text-white hover:bg-dark-700"
@@ -536,7 +543,7 @@ export default function Navbar() {
               {COMPANY.phone}
             </a>
             <Link
-              href="/#contact"
+              href={quoteHref}
               className="btn-primary text-center text-lg"
               onClick={() => setMobileOpen(false)}
             >

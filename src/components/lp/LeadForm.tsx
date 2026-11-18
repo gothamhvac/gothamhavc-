@@ -87,19 +87,21 @@ export default function LeadForm({ source, title, detailsPrompt, uploadLabel }: 
     }
   }
 
+  // Same field styling as the homepage contact form (dark glass).
   const input =
-    "w-full bg-white border border-slate-300 rounded-xl px-4 py-3.5 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-blue focus:ring-2 focus:ring-blue/25 transition-all";
-  const inputError = "border-red focus:border-red focus:ring-red/25";
+    "w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-white placeholder:text-white/30 focus:outline-none focus:border-blue/40 focus:ring-2 focus:ring-blue/30 transition-all";
+  const inputError = "border-red/40 focus:border-red/60 focus:ring-red/30";
 
   if (status === "success") {
     return (
-      <div id="quote" className="bg-white rounded-2xl p-7 sm:p-8 shadow-2xl shadow-black/30 text-center scroll-mt-24">
-        <CheckCircle className="w-14 h-14 text-green-600 mx-auto mb-4" />
-        <h2 className="text-2xl font-bold text-slate-900 mb-2">Request sent</h2>
-        <p className="text-slate-600 mb-6">
-          Thanks, {name.split(" ")[0] || "we got it"}. We&apos;ll call you back shortly. For anything urgent, call us now.
+      <div id="quote" className="glass-dark rounded-3xl p-8 sm:p-10 text-center scroll-mt-28">
+        <CheckCircle className="w-16 h-16 text-green-400 mx-auto mb-6" />
+        <h2 className="text-2xl font-bold text-white mb-3">Request Sent</h2>
+        <p className="text-white/40 mb-8 leading-relaxed">
+          Thanks{name.trim() ? `, ${name.trim().split(" ")[0]}` : ""}. We&apos;ll call you back shortly. For anything
+          urgent, call us now.
         </p>
-        <a href={COMPANY.phoneTel} className="btn-primary w-full justify-center text-base py-4">
+        <a href={COMPANY.phoneTel} className="btn-primary w-full text-base py-4">
           <Phone className="w-5 h-5" />
           Call {COMPANY.phone}
         </a>
@@ -108,63 +110,59 @@ export default function LeadForm({ source, title, detailsPrompt, uploadLabel }: 
   }
 
   return (
-    <form
-      id="quote"
-      onSubmit={handleSubmit}
-      noValidate
-      className="bg-white rounded-2xl p-6 sm:p-8 shadow-2xl shadow-black/30 scroll-mt-24"
-    >
-      <h2 className="text-2xl font-bold text-slate-900 mb-1">{title}</h2>
-      <p className="text-slate-500 text-sm mb-5">Takes 30 seconds. We call you back, no obligation.</p>
+    <form id="quote" onSubmit={handleSubmit} noValidate className="glass-dark rounded-3xl p-7 sm:p-10 scroll-mt-28">
+      <h2 className="text-2xl font-bold text-white mb-2">{title}</h2>
+      <p className="text-white/40 text-sm mb-7 leading-relaxed">Takes 30 seconds. We call you back, no obligation.</p>
 
       {serverError && (
-        <div className="flex items-center gap-2 bg-red/10 border border-red/20 rounded-lg px-3 py-2.5 mb-4" role="alert">
-          <AlertCircle className="w-4 h-4 text-red flex-shrink-0" />
+        <div className="flex items-center gap-3 bg-red/10 border border-red/20 rounded-xl px-4 py-3 mb-6" role="alert">
+          <AlertCircle className="w-5 h-5 text-red flex-shrink-0" />
           <p className="text-red text-sm">{serverError}</p>
         </div>
       )}
 
-      <div className="space-y-3">
+      <div className="space-y-4 mb-7">
         <div>
-          <label htmlFor="lp-name" className="block text-sm font-medium text-slate-700 mb-1">Name</label>
+          <label htmlFor="lp-name" className="sr-only">Your name</label>
           <input
             id="lp-name"
             autoComplete="name"
+            placeholder="Your name"
             value={name}
             onChange={(e) => { setName(e.target.value); setErrors((p) => ({ ...p, name: undefined })); }}
             className={`${input} ${errors.name ? inputError : ""}`}
             aria-invalid={!!errors.name}
           />
-          {errors.name && <p className="text-red text-xs mt-1" role="alert">{errors.name}</p>}
+          {errors.name && <p className="text-red text-xs mt-1.5 ml-1" role="alert">{errors.name}</p>}
         </div>
         <div>
-          <label htmlFor="lp-phone" className="block text-sm font-medium text-slate-700 mb-1">Phone</label>
+          <label htmlFor="lp-phone" className="sr-only">Phone number</label>
           <input
             id="lp-phone"
             type="tel"
             autoComplete="tel"
             inputMode="tel"
+            placeholder="Phone number"
             value={phone}
             onChange={(e) => { setPhone(e.target.value); setErrors((p) => ({ ...p, phone: undefined })); }}
             className={`${input} ${errors.phone ? inputError : ""}`}
             aria-invalid={!!errors.phone}
           />
-          {errors.phone && <p className="text-red text-xs mt-1" role="alert">{errors.phone}</p>}
+          {errors.phone && <p className="text-red text-xs mt-1.5 ml-1" role="alert">{errors.phone}</p>}
         </div>
         <div>
-          <label htmlFor="lp-email" className="block text-sm font-medium text-slate-700 mb-1">
-            Email <span className="text-slate-400 font-normal">(optional)</span>
-          </label>
+          <label htmlFor="lp-email" className="sr-only">Email address (optional)</label>
           <input
             id="lp-email"
             type="email"
             autoComplete="email"
+            placeholder="Email address (optional)"
             value={email}
             onChange={(e) => { setEmail(e.target.value); setErrors((p) => ({ ...p, email: undefined })); }}
             className={`${input} ${errors.email ? inputError : ""}`}
             aria-invalid={!!errors.email}
           />
-          {errors.email && <p className="text-red text-xs mt-1" role="alert">{errors.email}</p>}
+          {errors.email && <p className="text-red text-xs mt-1.5 ml-1" role="alert">{errors.email}</p>}
         </div>
         <div>
           <label htmlFor="lp-details" className="sr-only">Project details</label>
@@ -183,10 +181,13 @@ export default function LeadForm({ source, title, detailsPrompt, uploadLabel }: 
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
-              className="w-full flex items-center justify-center gap-2 border border-dashed border-slate-300 rounded-xl px-4 py-3 text-sm text-slate-600 hover:border-blue hover:text-blue transition-colors"
+              className="w-full border border-dashed border-white/10 bg-white/5 hover:border-white/20 hover:bg-white/[0.07] rounded-xl px-5 py-4 text-center transition-all"
             >
-              <Upload className="w-4 h-4" />
-              {uploadLabel}
+              <Upload className="w-5 h-5 text-white/30 mx-auto mb-1.5" />
+              <span className="block text-sm text-white/40">
+                <span className="text-blue font-medium">{uploadLabel}</span>
+              </span>
+              <span className="block text-white/20 text-xs mt-1">PDF or images · up to 3 files · 5MB each</span>
             </button>
             <input
               ref={fileInputRef}
@@ -196,20 +197,19 @@ export default function LeadForm({ source, title, detailsPrompt, uploadLabel }: 
               className="hidden"
               onChange={(e) => { if (e.target.files) addFiles(e.target.files); e.target.value = ""; }}
             />
-            <p className="text-slate-400 text-xs mt-1 text-center">PDF or images · up to 3 files · 5MB each</p>
             {files.length > 0 && (
-              <ul className="mt-2 space-y-1.5">
+              <ul className="mt-2 space-y-2">
                 {files.map((file, i) => (
-                  <li key={`${file.name}-${i}`} className="flex items-center gap-2 bg-slate-50 rounded-lg px-3 py-2 text-sm">
-                    <Paperclip className="w-4 h-4 text-slate-400 flex-shrink-0" />
-                    <span className="truncate flex-1 text-slate-700">{file.name}</span>
+                  <li key={`${file.name}-${i}`} className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-lg px-4 py-3">
+                    <Paperclip className="w-4 h-4 text-white/30 flex-shrink-0" />
+                    <span className="text-white text-sm truncate flex-1">{file.name}</span>
                     <button
                       type="button"
                       onClick={() => setFiles((prev) => prev.filter((_, j) => j !== i))}
-                      className="text-slate-400 hover:text-slate-700"
+                      className="w-6 h-6 rounded-full bg-white/5 flex items-center justify-center text-white/30 hover:text-white hover:bg-white/10 transition-all"
                       aria-label={`Remove ${file.name}`}
                     >
-                      <X className="w-4 h-4" />
+                      <X className="w-3 h-3" />
                     </button>
                   </li>
                 ))}
@@ -222,7 +222,7 @@ export default function LeadForm({ source, title, detailsPrompt, uploadLabel }: 
       <button
         type="submit"
         disabled={status === "submitting"}
-        className="btn-primary w-full justify-center text-base py-4 mt-5 disabled:opacity-60 disabled:cursor-not-allowed"
+        className="btn-primary w-full text-base py-4 disabled:opacity-60 disabled:cursor-not-allowed disabled:transform-none"
       >
         {status === "submitting" ? (
           <>
@@ -236,9 +236,9 @@ export default function LeadForm({ source, title, detailsPrompt, uploadLabel }: 
           </>
         )}
       </button>
-      <p className="text-center text-sm text-slate-500 mt-4">
+      <p className="text-center text-sm text-white/40 mt-4">
         Or call{" "}
-        <a href={COMPANY.phoneTel} className="font-semibold text-slate-900 hover:text-blue">
+        <a href={COMPANY.phoneTel} className="font-semibold text-white hover:text-blue transition-colors">
           {COMPANY.phone}
         </a>{" "}
         · answered 24/7

@@ -10,7 +10,38 @@
  * contractor, 15+ years, upfront pricing, DOB filing). No prices or timelines.
  */
 
+import type { LucideIcon } from "lucide-react";
+import {
+  AirVent,
+  BadgeDollarSign,
+  Building,
+  Calculator,
+  Calendar,
+  ClipboardCheck,
+  Clock,
+  CookingPot,
+  Droplets,
+  Fan,
+  FileText,
+  Flame,
+  Gauge,
+  Hammer,
+  Heater,
+  Leaf,
+  Refrigerator,
+  Scale,
+  Search,
+  Snowflake,
+  Store,
+  Thermometer,
+  Trash2,
+  Warehouse,
+  Wind,
+  Wrench,
+} from "lucide-react";
+
 export interface LandingPageCard {
+  icon?: LucideIcon;
   title: string;
   text: string;
 }
@@ -27,7 +58,9 @@ export interface LandingPageConfig {
   metaTitle: string;
   metaDescription: string;
   eyebrow: string;
+  /** Headline: first line white, second line in the site's blue gradient. */
   h1: string;
+  h1Accent: string;
   sub: string;
   heroImage: string;
   heroAlt: string;
@@ -64,7 +97,8 @@ export const landingPages: LandingPageConfig[] = [
     metaDescription:
       "New central air and heat pump systems for NYC and Westchester homes. Site survey, itemized quote, permits and start-up handled.",
     eyebrow: "New HVAC Systems · NYC & Westchester",
-    h1: "New Heating & Cooling Systems, Sized for Your Home",
+    h1: "New Heating & Cooling Systems",
+    h1Accent: "Sized for Your Home",
     sub: "Central air, heat pumps and full system replacements. We survey the house, fix the duct problems and give you an itemized quote with standard and high-efficiency options.",
     heroImage: "/outdoor-ac-condensers.webp",
     heroAlt: "New outdoor air conditioning condensers beside a home",
@@ -72,12 +106,12 @@ export const landingPages: LandingPageConfig[] = [
     detailsPrompt: "What do you have now, and what are you looking for? (optional)",
     includedTitle: "What a new system from Gotham includes",
     included: [
-      { title: "Central air systems", text: "New condenser, matched coil and air handler or furnace, on today's refrigerants." },
-      { title: "Heat pumps", text: "Cold-climate heat pumps that heat and cool, with NYSERDA and Con Edison rebates checked for you." },
-      { title: "Ductwork fixes", text: "Undersized returns, leaky joints and poor registers found on the survey and fixed in the quote." },
-      { title: "Proper sizing", text: "Equipment sized from load calculations, not copied from the label on the old unit." },
-      { title: "Permits & start-up", text: "We handle permits and inspections, then start up and test the system." },
-      { title: "Smart controls", text: "A Wi-Fi thermostat set up and tested with the new system." },
+      { icon: Snowflake, title: "Central air systems", text: "New condenser, matched coil and air handler or furnace, on today's refrigerants." },
+      { icon: Thermometer, title: "Heat pumps", text: "Cold-climate heat pumps that heat and cool, with NYSERDA and Con Edison rebates checked for you." },
+      { icon: Wind, title: "Ductwork fixes", text: "Undersized returns, leaky joints and poor registers found on the survey and fixed in the quote." },
+      { icon: Calculator, title: "Proper sizing", text: "Equipment sized from load calculations, not copied from the label on the old unit." },
+      { icon: ClipboardCheck, title: "Permits & start-up", text: "We handle permits and inspections, then start up and test the system." },
+      { icon: Gauge, title: "Smart controls", text: "A Wi-Fi thermostat set up and tested with the new system." },
     ],
     steps: residentialSteps,
     faqs: [
@@ -108,7 +142,8 @@ export const landingPages: LandingPageConfig[] = [
     metaDescription:
       "Replace your old boiler or furnace with properly sized new equipment, or compare a cold-climate heat pump with rebates applied.",
     eyebrow: "Boiler & Furnace Replacement",
-    h1: "Replace Your Boiler or Furnace the Right Way",
+    h1: "Boiler & Furnace",
+    h1Accent: "Replacement",
     sub: "Old heating system on its last legs? We replace boilers and furnaces with properly sized new equipment, and can price a cold-climate heat pump next to it, with rebates applied, so you can compare.",
     heroImage: "/furnace-unit.webp",
     heroAlt: "Newly installed gas furnace in a basement",
@@ -116,12 +151,12 @@ export const landingPages: LandingPageConfig[] = [
     detailsPrompt: "What heating system do you have now, and how old is it? (optional)",
     includedTitle: "What's included in a replacement",
     included: [
-      { title: "New boilers", text: "Gas and steam boiler replacements sized to the building's real heat load." },
-      { title: "New furnaces", text: "High-efficiency gas furnaces matched to your ductwork and AC coil." },
-      { title: "Heat pump option", text: "Switch to a cold-climate heat pump, with your old system kept as backup if you want." },
-      { title: "Old equipment removed", text: "We disconnect, remove and dispose of the old boiler or furnace." },
-      { title: "Venting, gas & condensate", text: "Flue, gas and condensate connections done to code." },
-      { title: "Permits, start-up & testing", text: "Permits and inspections handled, then a full start-up and safety check." },
+      { icon: Flame, title: "New boilers", text: "Gas and steam boiler replacements sized to the building's real heat load." },
+      { icon: Heater, title: "New furnaces", text: "High-efficiency gas furnaces matched to your ductwork and AC coil." },
+      { icon: Leaf, title: "Heat pump option", text: "Switch to a cold-climate heat pump, with your old system kept as backup if you want." },
+      { icon: Trash2, title: "Old equipment removed", text: "We disconnect, remove and dispose of the old boiler or furnace." },
+      { icon: Wind, title: "Venting, gas & condensate", text: "Flue, gas and condensate connections done to code." },
+      { icon: ClipboardCheck, title: "Permits, start-up & testing", text: "Permits and inspections handled, then a full start-up and safety check." },
     ],
     steps: residentialSteps,
     faqs: [
@@ -153,7 +188,8 @@ export const landingPages: LandingPageConfig[] = [
     metaDescription:
       "Ducted and ductless heat pump installation in NYC and Westchester. NYSERDA-qualified contractor: we check your rebates and file the paperwork.",
     eyebrow: "Heat Pumps · NYSERDA & Con Edison Clean Heat",
-    h1: "Heat Pump Installation, With the Rebates Handled",
+    h1: "Heat Pump Installation",
+    h1Accent: "With Rebates Handled",
     sub: "Ducted and ductless heat pumps that heat in winter and cool in summer. As a NYSERDA-qualified, Con Edison participating contractor, we check what you qualify for and file the paperwork.",
     heroImage: "/heating-cooling-hero.webp",
     heroAlt: "Row of heat pump condensers mounted on a building wall",
@@ -161,12 +197,12 @@ export const landingPages: LandingPageConfig[] = [
     detailsPrompt: "Home or building type, and what you heat and cool with now (optional)",
     includedTitle: "Heat pump systems we install",
     included: [
-      { title: "Ducted heat pumps", text: "Whole-home systems through new or existing ductwork." },
-      { title: "Ductless mini-splits", text: "Single and multi-zone systems for homes, apartments and additions without ducts." },
-      { title: "Rebate paperwork", text: "NYSERDA and Con Edison Clean Heat applications prepared and filed for you." },
-      { title: "Free rebate assessment", text: "We tell you which incentives you qualify for before you commit." },
-      { title: "Sized from load calcs", text: "Systems sized to your home's full heating load, so they keep up in winter." },
-      { title: "Multifamily buildings", text: "Con Edison Multifamily Clean Heat incentives for building owners." },
+      { icon: Wind, title: "Ducted heat pumps", text: "Whole-home systems through new or existing ductwork." },
+      { icon: AirVent, title: "Ductless mini-splits", text: "Single and multi-zone systems for homes, apartments and additions without ducts." },
+      { icon: FileText, title: "Rebate paperwork", text: "NYSERDA and Con Edison Clean Heat applications prepared and filed for you." },
+      { icon: BadgeDollarSign, title: "Free rebate assessment", text: "We tell you which incentives you qualify for before you commit." },
+      { icon: Calculator, title: "Sized from load calcs", text: "Systems sized to your home's full heating load, so they keep up in winter." },
+      { icon: Building, title: "Multifamily buildings", text: "Con Edison Multifamily Clean Heat incentives for building owners." },
     ],
     steps: residentialSteps,
     faqs: [
@@ -198,7 +234,8 @@ export const landingPages: LandingPageConfig[] = [
     metaDescription:
       "Full mechanical packages for NYC townhouse and brownstone renovations: heat pumps, ductwork, ventilation, controls, balancing and DOB filing.",
     eyebrow: "Townhouse & Brownstone HVAC",
-    h1: "HVAC for Townhouse & Brownstone Renovations",
+    h1: "Townhouse & Brownstone",
+    h1Accent: "HVAC",
     sub: "Full mechanical packages for NYC townhouses: heat pumps, ductwork, ventilation, controls and balancing. Engineered, installed clean and filed with the DOB.",
     heroImage: "/ductwork-install.webp",
     heroAlt: "Ductwork and linear diffusers installed during a renovation",
@@ -207,12 +244,12 @@ export const landingPages: LandingPageConfig[] = [
     upload: { label: "Have mechanical drawings? Attach them (PDF)" },
     includedTitle: "A complete mechanical package",
     included: [
-      { title: "Heat pump systems", text: "Water-source, ducted and ductless systems sized from load calculations." },
-      { title: "Ductwork & air distribution", text: "Galvanized ductwork to SMACNA standards, with clean linear diffusers and registers." },
-      { title: "Ventilation & exhaust", text: "Outside air, bathroom and kitchen exhaust connections, designed and installed to code." },
-      { title: "Controls & thermostats", text: "Programmable Wi-Fi controls, wiring and written sequences of operation." },
-      { title: "Testing & balancing", text: "Certified air and water balancing with a report for the owner." },
-      { title: "DOB filing & closeout", text: "Mechanical permit filing, submittals, O&M manuals and owner training." },
+      { icon: Thermometer, title: "Heat pump systems", text: "Water-source, ducted and ductless systems sized from load calculations." },
+      { icon: Wind, title: "Ductwork & air distribution", text: "Galvanized ductwork to SMACNA standards, with clean linear diffusers and registers." },
+      { icon: Fan, title: "Ventilation & exhaust", text: "Outside air, bathroom and kitchen exhaust connections, designed and installed to code." },
+      { icon: Gauge, title: "Controls & thermostats", text: "Programmable Wi-Fi controls, wiring and written sequences of operation." },
+      { icon: ClipboardCheck, title: "Testing & balancing", text: "Certified air and water balancing with a report for the owner." },
+      { icon: FileText, title: "DOB filing & closeout", text: "Mechanical permit filing, submittals, O&M manuals and owner training." },
     ],
     steps: [
       { title: "Drawings or site visit", text: "Send the engineer's drawings, or we survey the house and recommend a system." },
@@ -249,7 +286,8 @@ export const landingPages: LandingPageConfig[] = [
     metaDescription:
       "Rooftop units, split systems, heat pumps and ventilation for NYC commercial spaces. Engineered sizing, DOB filing and balancing.",
     eyebrow: "Commercial HVAC Installation",
-    h1: "Commercial HVAC Installation, Engineered to Fit",
+    h1: "Commercial HVAC",
+    h1Accent: "Installation",
     sub: "Rooftop units, split systems, heat pumps and ventilation for NYC offices, stores, restaurants and multifamily buildings. Sized from load calculations, filed with the DOB and balanced before handover.",
     heroImage: "/hvac-ductwork.webp",
     heroAlt: "Commercial ductwork installed in a ceiling",
@@ -258,12 +296,12 @@ export const landingPages: LandingPageConfig[] = [
     upload: { label: "Attach drawings, specs or photos (optional)" },
     includedTitle: "Commercial installs we handle",
     included: [
-      { title: "Rooftop & package units", text: "Replacements and new installs, rigged, set and started up." },
-      { title: "Split systems & heat pumps", text: "Ducted and ductless systems for offices, retail and restaurants." },
-      { title: "Ventilation & exhaust", text: "Outside air, exhaust and ventilation improvements done to code." },
-      { title: "Multifamily heat pumps", text: "Building-wide heat pump projects with Con Edison Clean Heat incentives." },
-      { title: "DOB filing & closeout", text: "Mechanical permit filing, submittals and closeout documents." },
-      { title: "Testing & balancing", text: "Systems balanced and verified before handover." },
+      { icon: Warehouse, title: "Rooftop & package units", text: "Replacements and new installs, rigged, set and started up." },
+      { icon: AirVent, title: "Split systems & heat pumps", text: "Ducted and ductless systems for offices, retail and restaurants." },
+      { icon: Fan, title: "Ventilation & exhaust", text: "Outside air, exhaust and ventilation improvements done to code." },
+      { icon: Building, title: "Multifamily heat pumps", text: "Building-wide heat pump projects with Con Edison Clean Heat incentives." },
+      { icon: FileText, title: "DOB filing & closeout", text: "Mechanical permit filing, submittals and closeout documents." },
+      { icon: ClipboardCheck, title: "Testing & balancing", text: "Systems balanced and verified before handover." },
     ],
     steps: commercialSteps,
     faqs: [
@@ -294,7 +332,8 @@ export const landingPages: LandingPageConfig[] = [
     metaDescription:
       "Repair and maintenance for rooftop units, split systems and boilers in NYC buildings. Phones answered 24/7, maintenance contracts available.",
     eyebrow: "Commercial HVAC Service",
-    h1: "Commercial HVAC Service & Maintenance",
+    h1: "Commercial HVAC",
+    h1Accent: "Service & Maintenance",
     sub: "Repair and maintenance for rooftop units, split systems and boilers in NYC buildings. Phones answered 24/7, same-week service and maintenance contracts with priority response.",
     heroImage: "/hvac-tools-closeup.webp",
     heroAlt: "HVAC service gauges and tools",
@@ -302,12 +341,12 @@ export const landingPages: LandingPageConfig[] = [
     detailsPrompt: "Building address, equipment and what's happening (optional)",
     includedTitle: "Service for commercial buildings",
     included: [
-      { title: "Rooftop unit repair", text: "Diagnostics and repair for package and rooftop units." },
-      { title: "Split systems & heat pumps", text: "Repair for ducted and ductless systems in offices, stores and restaurants." },
-      { title: "Commercial boilers", text: "Boiler service and repair for commercial and multifamily buildings." },
-      { title: "Maintenance contracts", text: "Quarterly or semi-annual visits with documented service records." },
-      { title: "Priority response", text: "Contract clients get priority for emergency and after-hours calls." },
-      { title: "Compliance documentation", text: "Records you can hand to landlords, insurers and inspectors." },
+      { icon: Wrench, title: "Rooftop unit repair", text: "Diagnostics and repair for package and rooftop units." },
+      { icon: AirVent, title: "Split systems & heat pumps", text: "Repair for ducted and ductless systems in offices, stores and restaurants." },
+      { icon: Flame, title: "Commercial boilers", text: "Boiler service and repair for commercial and multifamily buildings." },
+      { icon: Calendar, title: "Maintenance contracts", text: "Quarterly or semi-annual visits with documented service records." },
+      { icon: Clock, title: "Priority response", text: "Contract clients get priority for emergency and after-hours calls." },
+      { icon: FileText, title: "Compliance documentation", text: "Records you can hand to landlords, insurers and inspectors." },
     ],
     steps: commercialSteps,
     faqs: [
@@ -337,7 +376,8 @@ export const landingPages: LandingPageConfig[] = [
     metaDescription:
       "Commercial kitchen hood, exhaust and ventilation installation for NYC restaurants. Site visit, clear scope and upfront quote.",
     eyebrow: "Restaurant Hoods · Commercial Kitchens",
-    h1: "Restaurant Hood Installation in NYC",
+    h1: "Restaurant Hood",
+    h1Accent: "Installation",
     sub: "Commercial kitchen hoods, exhaust and ventilation for new restaurants and renovations. We measure on site, give you a clear scope and upfront quote, and work around your buildout schedule.",
     heroImage: "/restaurant-hood-hero.webp",
     heroAlt: "Stainless steel commercial kitchen exhaust hood",
@@ -346,12 +386,12 @@ export const landingPages: LandingPageConfig[] = [
     upload: { label: "Attach plans or photos (optional)" },
     includedTitle: "Kitchen hood & ventilation work",
     included: [
-      { title: "Hood installation", text: "Commercial kitchen hood installation for new and existing kitchens." },
-      { title: "Exhaust & ventilation", text: "Exhaust and ventilation support so the hood captures what it should." },
-      { title: "Buildouts & renovations", text: "New restaurant buildouts and kitchen renovations." },
-      { title: "Undersized hoods replaced", text: "Outdated or undersized hood systems replaced." },
-      { title: "Smoke & odor problems", text: "Poor capture, smoke and odor issues diagnosed and fixed." },
-      { title: "Timeline coordination", text: "Work scheduled around your GC and opening date." },
+      { icon: CookingPot, title: "Hood installation", text: "Commercial kitchen hood installation for new and existing kitchens." },
+      { icon: Fan, title: "Exhaust & ventilation", text: "Exhaust and ventilation support so the hood captures what it should." },
+      { icon: Hammer, title: "Buildouts & renovations", text: "New restaurant buildouts and kitchen renovations." },
+      { icon: Wrench, title: "Undersized hoods replaced", text: "Outdated or undersized hood systems replaced." },
+      { icon: Wind, title: "Smoke & odor problems", text: "Poor capture, smoke and odor issues diagnosed and fixed." },
+      { icon: Calendar, title: "Timeline coordination", text: "Work scheduled around your GC and opening date." },
     ],
     steps: [
       { title: "Quick intake", text: "Tell us about the kitchen, the equipment line and your timeline." },
@@ -382,7 +422,8 @@ export const landingPages: LandingPageConfig[] = [
     metaDescription:
       "Walk-in, reach-in and display cooler repair and installation for NYC restaurants, delis and supermarkets. Phones answered 24/7.",
     eyebrow: "Commercial Refrigeration",
-    h1: "Walk-In Cooler & Commercial Refrigeration Service",
+    h1: "Walk-In & Commercial",
+    h1Accent: "Refrigeration",
     sub: "Walk-in, reach-in and display cooler repair and installation for restaurants, delis, bodegas and supermarkets across NYC. Phones answered 24/7.",
     heroImage: "/hvac-technician.webp",
     heroAlt: "Technician testing refrigeration equipment with a meter",
@@ -390,12 +431,12 @@ export const landingPages: LandingPageConfig[] = [
     detailsPrompt: "Business address, equipment type and the problem (optional)",
     includedTitle: "Refrigeration we service",
     included: [
-      { title: "Walk-in coolers & freezers", text: "Service, repair and installation of walk-in boxes." },
-      { title: "Reach-in units", text: "Glass-door, solid-door and under-counter refrigeration." },
-      { title: "Open display cases", text: "Multi-deck, produce and dairy cases for delis and supermarkets." },
-      { title: "Compressor replacement", text: "Failed compressors diagnosed and replaced." },
-      { title: "Refrigerant leaks", text: "Leak detection, repair and recharge." },
-      { title: "Temperature controls", text: "Thermostats and controls repaired so product stays at temperature." },
+      { icon: Snowflake, title: "Walk-in coolers & freezers", text: "Service, repair and installation of walk-in boxes." },
+      { icon: Refrigerator, title: "Reach-in units", text: "Glass-door, solid-door and under-counter refrigeration." },
+      { icon: Store, title: "Open display cases", text: "Multi-deck, produce and dairy cases for delis and supermarkets." },
+      { icon: Wrench, title: "Compressor replacement", text: "Failed compressors diagnosed and replaced." },
+      { icon: Droplets, title: "Refrigerant leaks", text: "Leak detection, repair and recharge." },
+      { icon: Thermometer, title: "Temperature controls", text: "Thermostats and controls repaired so product stays at temperature." },
     ],
     steps: commercialSteps,
     faqs: [
@@ -420,7 +461,8 @@ export const landingPages: LandingPageConfig[] = [
     metaDescription:
       "FDNY VC19 and VC26 HVAC violation resolution: DOB document recovery, physical correction, FB-09 filing and OATH hearing representation.",
     eyebrow: "FDNY Violation Resolution",
-    h1: "FDNY HVAC Violations (VC19 & VC26) Resolved",
+    h1: "FDNY HVAC Violations",
+    h1Accent: "VC19 & VC26 Resolved",
     sub: "We recover the DOB documents, correct the equipment, file the FDNY Certificate of Correction (FB-09) and can represent you at the OATH hearing.",
     heroImage: "/hvac-blueprint.webp",
     heroAlt: "HVAC mechanical drawing",
@@ -429,12 +471,12 @@ export const landingPages: LandingPageConfig[] = [
     upload: { label: "Attach a photo or PDF of the summons (optional)" },
     includedTitle: "End-to-end violation resolution",
     included: [
-      { title: "VC19 documentation", text: "Missing Equipment Use Permits, Certificates of Compliance and sign-off records recovered." },
-      { title: "VC26 physical corrections", text: "Equipment, ductwork and venting corrected to clear safety violations." },
-      { title: "DOB document recovery", text: "We track down the records the FDNY is asking for." },
-      { title: "FB-09 filing", text: "Certificate of Correction prepared and filed with supporting proof." },
-      { title: "OATH hearing representation", text: "We attend the hearing with a full proof-of-compliance package." },
-      { title: "Upfront scope & pricing", text: "You know the plan and the price before work starts." },
+      { icon: FileText, title: "VC19 documentation", text: "Missing Equipment Use Permits, Certificates of Compliance and sign-off records recovered." },
+      { icon: Wrench, title: "VC26 physical corrections", text: "Equipment, ductwork and venting corrected to clear safety violations." },
+      { icon: Search, title: "DOB document recovery", text: "We track down the records the FDNY is asking for." },
+      { icon: ClipboardCheck, title: "FB-09 filing", text: "Certificate of Correction prepared and filed with supporting proof." },
+      { icon: Scale, title: "OATH hearing representation", text: "We attend the hearing with a full proof-of-compliance package." },
+      { icon: BadgeDollarSign, title: "Upfront scope & pricing", text: "You know the plan and the price before work starts." },
     ],
     steps: [
       { title: "Send the summons", text: "A photo or PDF of the summons is all we need to start." },
