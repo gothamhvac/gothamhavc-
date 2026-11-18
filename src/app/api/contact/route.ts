@@ -107,7 +107,7 @@ export async function POST(request: NextRequest) {
 
     // Subject tells the inbox where the lead came from at a glance.
     const subject = source
-      ? `${gclid ? "[Google Ads] " : ""}New ${source} request from ${name}`
+      ? `${gclid ? "[Google Ads] " : ""}${source} request from ${name}`
       : `New Service Request from ${name}`;
     const sourceLines = source
       ? [`Lead source: ${source}`, `Page: ${page || "-"}`, `Google Ads click: ${gclid ? `yes (gclid ${gclid})` : "no"}`, ``]
