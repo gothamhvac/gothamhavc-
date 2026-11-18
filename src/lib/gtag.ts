@@ -28,6 +28,15 @@ export const GADS_FORM_CONVERSION =
   process.env.NEXT_PUBLIC_GADS_FORM_CONV ||
   `${GADS_ID}/fEylCM3_tPkcEI_8jvpC`;
 
+/**
+ * "Website calls (forwarding number)" conversion (created 2026-11-17). With
+ * phone_conversion_number set, Google shows ad visitors a Google forwarding
+ * number and counts calls of 60s+ to it as conversions.
+ */
+export const GADS_WEBSITE_CALL_CONVERSION =
+  process.env.NEXT_PUBLIC_GADS_WEBSITE_CALL_CONV ||
+  `${GADS_ID}/g2NBCMn5vbodEI_8jvpC`;
+
 /** True once the AW- account id is real (it is, unless overridden to junk). */
 export const hasGoogleAdsId = /^AW-\d{6,}$/.test(GADS_ID);
 

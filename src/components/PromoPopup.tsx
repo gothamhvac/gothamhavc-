@@ -2,11 +2,13 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { X, MessageSquare } from "lucide-react";
 
 const STORAGE_KEY = "gotham-popup-dismissed";
 
 export default function PromoPopup() {
+  const pathname = usePathname();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -48,6 +50,9 @@ export default function PromoPopup() {
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [visible, dismiss]);
+
+  // Google Ads landing pages already lead with a form; no popup over it.
+  if (pathname?.startsWith("/lp/")) return null;
 
   return (
     <div

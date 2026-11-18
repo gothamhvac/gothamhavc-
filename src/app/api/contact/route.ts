@@ -44,13 +44,23 @@ export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
 
+    // Landing pages (/lp/*) send a source label and allow email/message to be
+    // blank; the main contact form still requires both on the client side.
+    const source = optionalField(formData.get("source"), 80);
+    const page = optionalField(formData.get("page"), 200);
+    const gclid = optionalField(formData.get("gclid"), 300);
+
     const name = validateField(formData.get("name"), "Name", 100);
-    const email = validateField(formData.get("email"), "Email", 200);
     const phone = validateField(formData.get("phone"), "Phone", 30);
-    const message = validateField(formData.get("message"), "Message", 5000);
+    const email = source
+      ? optionalField(formData.get("email"), 200)
+      : validateField(formData.get("email"), "Email", 200);
+    const message = source
+      ? optionalField(formData.get("message"), 5000)
+      : validateField(formData.get("message"), "Message", 5000);
 
     // Email format check
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return NextResponse.json(
         { error: "Please enter a valid email address." },
         { status: 400 },
@@ -95,28 +105,38 @@ export async function POST(request: NextRequest) {
       },
     });
 
+    // Subject tells the inbox where the lead came from at a glance.
+    const subject = source
+      ? `${gclid ? "[Google Ads] " : ""}New ${source} request from ${name}`
+      : `New Service Request from ${name}`;
+    const sourceLines = source
+      ? [`Lead source: ${source}`, `Page: ${page || "-"}`, `Google Ads click: ${gclid ? `yes (gclid ${gclid})` : "no"}`, ``]
+      : [];
+
     await transporter.sendMail({
       from: `"Gotham HVAC Website" <${process.env.SMTP_USER}>`,
       to: process.env.CONTACT_EMAIL ?? "contact@gothamac.com",
-      replyTo: email,
-      subject: `New Service Request from ${name}`,
+      ...(email ? { replyTo: email } : {}),
+      subject,
       text: [
+        ...sourceLines,
         `Name: ${name}`,
-        `Email: ${email}`,
+        `Email: ${email || "-"}`,
         `Phone: ${phone}`,
         ``,
         `Message:`,
-        message,
+        message || "-",
       ].join("\n"),
       html: `
-        <h2>New Service Request</h2>
+        <h2>New Service Request${source ? ` — ${escapeHtml(source)}` : ""}</h2>
+        ${source ? `<p style="color:#555;">Page: ${escapeHtml(page || "-")} · Google Ads click: ${gclid ? "yes" : "no"}</p>` : ""}
         <table style="border-collapse:collapse;">
           <tr><td style="padding:6px 12px;font-weight:bold;">Name</td><td style="padding:6px 12px;">${escapeHtml(name)}</td></tr>
-          <tr><td style="padding:6px 12px;font-weight:bold;">Email</td><td style="padding:6px 12px;"><a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a></td></tr>
+          <tr><td style="padding:6px 12px;font-weight:bold;">Email</td><td style="padding:6px 12px;">${email ? `<a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a>` : "-"}</td></tr>
           <tr><td style="padding:6px 12px;font-weight:bold;">Phone</td><td style="padding:6px 12px;"><a href="tel:${escapeHtml(phone)}">${escapeHtml(phone)}</a></td></tr>
         </table>
         <h3>Message</h3>
-        <p style="white-space:pre-wrap;">${escapeHtml(message)}</p>
+        <p style="white-space:pre-wrap;">${escapeHtml(message || "-")}</p>
       `,
       attachments,
     });
@@ -128,6 +148,11 @@ export async function POST(request: NextRequest) {
     console.error("Contact form error:", err);
     return NextResponse.json({ error: message }, { status: 500 });
   }
+}
+
+function optionalField(value: unknown, maxLen: number): string {
+  if (typeof value !== "string") return "";
+  return value.trim().slice(0, maxLen);
 }
 
 function escapeHtml(str: string): string {

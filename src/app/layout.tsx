@@ -6,7 +6,7 @@ import { getLocalBusinessSchema, getServiceSchema, getWebSiteSchema } from "@/li
 import { COMPANY } from "@/lib/constants";
 import PromoPopup from "@/components/PromoPopup";
 import PhoneClickTracker from "@/components/analytics/PhoneClickTracker";
-import { GADS_ID, hasGoogleAdsId } from "@/lib/gtag";
+import { GADS_ID, GADS_WEBSITE_CALL_CONVERSION, hasGoogleAdsId } from "@/lib/gtag";
 
 const GA_ID = "G-0PCJGXY3J9";
 
@@ -115,6 +115,49 @@ export default function RootLayout({
             ${hasGoogleAdsId ? `gtag('config', '${GADS_ID}');` : ""}
           `}
         </Script>
+        {hasGoogleAdsId && (
+          /* Website call tracking: for visitors who came from an ad, Google
+             returns a forwarding number. The default swap only changes text,
+             so this callback also rewrites tel: links (Google's documented
+             approach) and catches numbers React renders later. */
+          <Script id="gads-call-tracking" strategy="afterInteractive">
+            {`
+              (function () {
+                var DISPLAY = ${JSON.stringify(COMPANY.phone)};
+                var TEL = ${JSON.stringify(COMPANY.phoneTel)};
+                function swapNumber(formatted, mobile) {
+                  if (!formatted || !mobile || formatted === DISPLAY) return;
+                  var href = 'tel:' + mobile;
+                  function swap(root) {
+                    if (root.nodeType === 3) {
+                      if (root.nodeValue.indexOf(DISPLAY) !== -1) root.nodeValue = root.nodeValue.split(DISPLAY).join(formatted);
+                      return;
+                    }
+                    if (root.nodeType !== 1) return;
+                    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+                    var node;
+                    while ((node = walker.nextNode())) {
+                      if (node.nodeValue.indexOf(DISPLAY) !== -1) node.nodeValue = node.nodeValue.split(DISPLAY).join(formatted);
+                    }
+                    if (root.matches && root.matches('a[href="' + TEL + '"]')) root.setAttribute('href', href);
+                    var links = root.querySelectorAll('a[href="' + TEL + '"]');
+                    for (var i = 0; i < links.length; i++) links[i].setAttribute('href', href);
+                  }
+                  swap(document.body);
+                  new MutationObserver(function (mutations) {
+                    mutations.forEach(function (m) { m.addedNodes.forEach(swap); });
+                  }).observe(document.body, { childList: true, subtree: true });
+                }
+                window.dataLayer = window.dataLayer || [];
+                var g = window.gtag || function () { window.dataLayer.push(arguments); };
+                g('config', '${GADS_WEBSITE_CALL_CONVERSION}', {
+                  phone_conversion_number: DISPLAY,
+                  phone_conversion_callback: swapNumber
+                });
+              })();
+            `}
+          </Script>
+        )}
       </head>
       <body className={`${inter.variable} antialiased`}>
         <a href="#main-content" className="skip-nav">
